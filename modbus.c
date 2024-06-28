@@ -84,13 +84,13 @@ uint8_t is_modbus_frame_validity () {
 
 uint16_t modbus_calc_crc16 (uint8_t *data, uint8_t size) {
 	uint16_t result = 0xFFFF;
-	uint8_t dataOffset = 0;
-	uint8_t bitOffset = 0;
+	uint8_t data_offset = 0;
+	uint8_t bit_offset = 0;
 
-	for (dataOffset = 0; dataOffset < size; dataOffset ++) {
-		result ^= *(data + dataOffset);
+	for (data_offset = 0; data_offset < size; data_offset ++) {
+		result ^= *(data + data_offset);
 
-		for (bitOffset = 0; bitOffset < 8; bitOffset ++) {
+		for (bit_offset = 0; bit_offset < 8; bit_offset ++) {
 			if (result & 0x0001) {
 				result >>= 1;
 				result ^= 0xA001;
@@ -153,10 +153,12 @@ void modbus_receive_byte (uint8_t data) {
 	}
 }
 
-Modbus *init_modbus () {
-	Modbus *p;
+Modbus *init_modbus (Modbus *p) {
 
-	p = &modbus;
+	if (p == NULL) {
+		return NULL;
+	}
+
 	p->is_pending = 0;
 	p->is_timeout = 0;
 	p->status = MODBUS_STATUS_IDLE;

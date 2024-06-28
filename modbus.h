@@ -44,7 +44,7 @@ typedef struct _modbus {
 } Modbus;
 extern Modbus modbus;
 
-Modbus *init_modbus (void );
+Modbus *init_modbus (Modbus *p);
 uint16_t modbus_calc_crc16 (uint8_t *data, uint8_t size);
 
 void modbus_func03_read_register (void );
